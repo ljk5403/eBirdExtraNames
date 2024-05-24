@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
 // @namespace    http://tampermonkey.net/
-// @version      1.0 2024-05-23
+// @version      1.1 2024-05-23
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
-// @description:zh-CN  在eBird图鉴网站中的学名后加注中文名，使用 IOC 14.1
+// @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
 // @author       Jiankun Li
 // @license      MIT
 // @namespace    https://github.com/ljk5403
 // @homepageURL  https://github.com/ljk5403/eBirdExtraNames
-// @match        https://ebird.org/species/*
+// @match        https://ebird.org/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=ebird.org
 // @grant        none
 // ==/UserScript==
@@ -11218,13 +11218,17 @@
 "Tangara velia": "白腰靓唐纳雀",
     };
 
-    // Function to insert Chinese names next to the scientific name
-    function insertChineseNames() {
-        console.log('Running insertChineseNames...');
+    // Find all scientific names
+    function insertChineseNamesToAll(){
+        let sciNames = document.querySelectorAll('span.Heading-sub.Heading-sub--sci');
+        for (let sciNameElement of sciNames) {
+            insertChineseNames(sciNameElement)
+        }
+    }
 
-        // Select the scientific name element using a more flexible CSS selector
-        const sciNameElement = document.querySelector('span.Heading-sub.Heading-sub--sci');
-        console.log('Scientific name element:', sciNameElement);
+    // Function to insert Chinese names next to the scientific name
+    function insertChineseNames(sciNameElement) {
+        console.log('Running insertChineseNames...');
 
         if (sciNameElement) {
             const scientificName = sciNameElement.textContent.trim();
@@ -11245,5 +11249,5 @@
     }
 
     // Run the function
-    insertChineseNames()
+    insertChineseNamesToAll()
 })();
