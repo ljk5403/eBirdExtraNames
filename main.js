@@ -11220,7 +11220,11 @@
 
     // Find all scientific names
     function insertChineseNamesToAll(){
-        let sciNames = document.querySelectorAll('span.Heading-sub.Heading-sub--sci');
+        let sciNames = document.querySelectorAll('.Heading-sub--sci');
+        for (let sciNameElement of sciNames) {
+            insertChineseNames(sciNameElement)
+        }
+        sciNames = document.querySelectorAll('.sci');
         for (let sciNameElement of sciNames) {
             insertChineseNames(sciNameElement)
         }
