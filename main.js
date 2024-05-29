@@ -12,6 +12,7 @@
 // @match        https://ebird.org/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=ebird.org
 // @grant        none
+// @run-at       document-idle
 // ==/UserScript==
 
 
@@ -11220,6 +11221,13 @@
 
     // Find all scientific names
     function insertChineseNamesToAll(){
+        insertChineseNamesbyCSSPath('.Heading-sub--sci');
+        insertChineseNamesbyCSSPath('.sci');
+        insertChineseNamesbyCSSPath('.Species-sci.Species-sub');
+        insertChineseNamesbyCSSPath('.MediaCredit-sciName');
+    }
+
+    function insertChineseNamesToAllx(){
         let sciNames = document.querySelectorAll('.Heading-sub--sci');
         for (let sciNameElement of sciNames) {
             insertChineseNames(sciNameElement)
@@ -11238,10 +11246,16 @@
         }
     }
 
+    // Insert Chinese names base on CSS path
+    function insertChineseNamesbyCSSPath(csspath){
+        let sciNames = document.querySelectorAll(csspath);
+        console.log(`For CSS Path ${csspath} found sci names `, sciNames)
+        for (let sciNameElement of sciNames) {
+            insertChineseNames(sciNameElement)
+        }
+    }
     // Function to insert Chinese names next to the scientific name
     function insertChineseNames(sciNameElement) {
-        console.log('Running insertChineseNames...');
-
         if (sciNameElement) {
             const scientificName = sciNameElement.textContent.trim();
             console.log('Scientific name:', scientificName);
@@ -11261,5 +11275,5 @@
     }
 
     // Run the function
-    insertChineseNamesToAll()
+    setTimeout(insertChineseNamesToAll, 1000);
 })();
