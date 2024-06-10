@@ -11254,13 +11254,20 @@
             insertChineseNames(sciNameElement)
         }
     }
+    // Function to extract the first two words from a given scientific name
+    function extractFirstTwoWords(sciName) {
+        // Split the name by spaces
+        const words = sciName.trim().split(/\s+/);
+        // Join the first two words back together
+        return words.slice(0, 2).join(' ');
+    }
     // Function to insert Chinese names next to the scientific name
     function insertChineseNames(sciNameElement) {
         if (sciNameElement) {
             const scientificName = sciNameElement.textContent.trim();
             console.log('Scientific name:', scientificName);
 
-            const chineseName = nameMap[scientificName];
+            const chineseName = nameMap[extractFirstTwoWords(scientificName)];
             if (chineseName) {
                 const chineseNameSpan = document.createElement('span');
                 chineseNameSpan.textContent = ` ${chineseName}`;
