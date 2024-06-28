@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
 // @namespace    http://tampermonkey.net/
-// @version      1.5
+// @version      1.7
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -11227,25 +11227,6 @@
         insertChineseNamesbyCSSPath('.MediaCredit-sciName');
     }
 
-    function insertChineseNamesToAllx(){
-        let sciNames = document.querySelectorAll('.Heading-sub--sci');
-        for (let sciNameElement of sciNames) {
-            insertChineseNames(sciNameElement)
-        }
-        sciNames = document.querySelectorAll('.sci');
-        for (let sciNameElement of sciNames) {
-            insertChineseNames(sciNameElement)
-        }
-        sciNames = document.querySelectorAll('.Species-sci.Species-sub');
-        for (let sciNameElement of sciNames) {
-            insertChineseNames(sciNameElement)
-        }
-        sciNames = document.querySelectorAll('.MediaCredit-sciName');
-        for (let sciNameElement of sciNames) {
-            insertChineseNames(sciNameElement)
-        }
-    }
-
     // Insert Chinese names base on CSS path
     function insertChineseNamesbyCSSPath(csspath){
         let sciNames = document.querySelectorAll(csspath);
@@ -11264,6 +11245,12 @@
     // Function to insert Chinese names next to the scientific name
     function insertChineseNames(sciNameElement) {
         if (sciNameElement) {
+            // Check if the element has already been processed
+            if (sciNameElement.hasAttribute('data-processed')) {
+                //console.log(`Element already processed: ${sciNameElement.textContent.trim()}`);
+                return; // Exit the function if already processed
+            }
+
             const scientificName = sciNameElement.textContent.trim();
             console.log('Scientific name:', scientificName);
 
@@ -11273,6 +11260,9 @@
                 chineseNameSpan.textContent = ` ${chineseName}`;
                 sciNameElement.appendChild(chineseNameSpan);
                 console.log(`Added Chinese name: ${chineseName}`);
+
+                // Mark the element as processed
+                sciNameElement.setAttribute('data-processed', 'true');
             } else {
                 console.warn(`No Chinese name found for: ${scientificName}`);
             }
@@ -11281,6 +11271,36 @@
         }
     }
 
+    function onElementReady(querySelector,callBack, testtime) {
+        if (document.querySelector(querySelector)) {
+          callBack();
+          return true
+        } else {
+          setTimeout(()=>onElementReady.call(this, querySelector, callBack, testtime), 100);
+        }
+        if (testtime > 0) {
+            testtime = testtime -1
+        } else {
+            return false
+        }
+    }
+
     // Run the function
+    //onElementReady("ol.UnorderedList", insertChineseNamesToAll, 5) || setTimeout(insertChineseNamesToAll, 1000);
+    onElementReady("ol.UnorderedList", insertChineseNamesToAll, 5)
     setTimeout(insertChineseNamesToAll, 1000);
 })();
+
+/*
+Test examples:
+1. Checklist: https://ebird.org/checklist/S183780628
+    Testing feature: load names before images
+2. Lifelist: https://ebird.org/lifelist?time=life&r=world
+3. Explore: https://ebird.org/region/CN-12
+            https://ebird.org/targets?r1=CN-12
+4. Trip report: https://ebird.org/tripreport/233389
+5. Home page: https://ebird.org/home
+TODO:
+Click on image, then update name?
+
+*/
