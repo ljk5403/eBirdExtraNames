@@ -7045,6 +7045,8 @@
 "Ptilostomus afer": "须嘴鸦",
 "Coloeus monedula": "寒鸦",
 "Coloeus dauuricus": "达乌里寒鸦",
+"Corvus monedula": "寒鸦", //Fix for eBird
+"Corvus dauuricus": "达乌里寒鸦", //Fix for eBird
 "Corvus splendens": "家鸦",
 "Corvus moneduloides": "新喀鸦",
 "Corvus typicus": "苏拉乌鸦",
