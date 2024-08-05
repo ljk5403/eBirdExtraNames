@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      1.7.2
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -17,6 +17,8 @@
 
 
 // ChatGPT: I want to write a Tampermonkey script to add Chinese Name Near Scientific Name on the website https://ebird.org/species/ for bird species. Please think carefully and show me your code for doing that.
+
+// "//Fix for eBird" means a species have a different scientific name in ebird
 
 (function() {
     'use strict';
@@ -3913,6 +3915,7 @@
 "Leuconotopicus arizonae": "亚利桑那啄木鸟",
 "Leuconotopicus stricklandi": "褐斑啄木鸟",
 "Leuconotopicus villosus": "长嘴啄木鸟",
+"Dryobates villosus": "长嘴啄木鸟", //Fix for eBird
 "Leuconotopicus albolarvatus": "白头啄木鸟",
 "Dendrocopos hyperythrus": "棕腹啄木鸟",
 "Dendrocopos macei": "茶胸斑啄木鸟",
@@ -7077,6 +7080,7 @@
 "Corvus corone": "小嘴乌鸦",
 "Corvus cornix": "冠小嘴乌鸦",
 "Corvus torquatus": "白颈鸦",
+"Corvus pectoralis": "白颈鸦", //Fix for eBird
 "Corvus macrorhynchos": "大嘴乌鸦",
 "Corvus levaillantii": "丛林鸦",
 "Corvus culminatus": "印度丛林鸦",
@@ -7231,6 +7235,7 @@
 "Periparus rubidiventris": "黑冠山雀",
 "Periparus ater": "煤山雀",
 "Pardaliparus venustulus": "黄腹山雀",
+"Periparus venustulus": "黄腹山雀", //Fix for eBird
 "Pardaliparus elegans": "丽色山雀",
 "Pardaliparus amabilis": "巴拉望山雀",
 "Lophophanes cristatus": "凤头山雀",
@@ -8169,12 +8174,14 @@
 "Fulvetta formosana": "玉山雀鹛",
 "Chamaea fasciata": "鹪雀莺",
 "Paradoxornis heudei": "震旦鸦雀",
+"Calamornis heudei": "震旦鸦雀", //Fix for eBird
 "Paradoxornis flavirostris": "斑胸鸦雀",
 "Paradoxornis guttaticollis": "点胸鸦雀",
 "Paradoxornis aemodius": "红嘴鸦雀",
 "Paradoxornis unicolor": "褐鸦雀",
 "Paradoxornis paradoxus": "三趾鸦雀",
 "Paradoxornis gularis": "灰头鸦雀",
+"Psittiparus gularis": "灰头鸦雀", //Fix for eBird
 "Paradoxornis margaritae": "黑头鸦雀",
 "Paradoxornis ruficeps": "白胸鸦雀",
 "Paradoxornis bakeri": "红头鸦雀",
@@ -11290,7 +11297,7 @@
     // Run the function
     //onElementReady("ol.UnorderedList", insertChineseNamesToAll, 5) || setTimeout(insertChineseNamesToAll, 1000);
     onElementReady("ol.UnorderedList", insertChineseNamesToAll, 5)
-    setTimeout(insertChineseNamesToAll, 1000);
+    setTimeout(insertChineseNamesToAll, 1000); //Run it again to avoid "ol.UnorderedList" does not exist
 })();
 
 /*
