@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
 // @namespace    http://tampermonkey.net/
-// @version      1.7.2
+// @version      1.7.20241104
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -2667,16 +2667,16 @@
 "Botaurus poiciloptilus": "褐麻鳽",
 "Botaurus lentiginosus": "美洲麻鳽",
 "Botaurus pinnatus": "大嘴麻鳽",
-"Ixobrychus involucris": "纹背苇鳽",
-"Ixobrychus exilis": "姬苇鳽",
-"Ixobrychus flavicollis": "黑鳽",
-"Ixobrychus cinnamomeus": "栗苇鳽",
-"Ixobrychus eurhythmus": "紫背苇鳽",
-"Ixobrychus sturmii": "蓝苇鳽",
-"Ixobrychus minutus": "小苇鳽",
-"Ixobrychus sinensis": "黄苇鳽",
-"Ixobrychus dubius": "黑背苇鳽",
-"Ixobrychus novaezelandiae": "新西兰苇鳽",
+"Botaurus involucris": "纹背苇鳽",
+"Botaurus exilis": "姬苇鳽",
+"Botaurus flavicollis": "黑鳽",
+"Botaurus cinnamomeus": "栗苇鳽",
+"Botaurus eurhythmus": "紫背苇鳽",
+"Botaurus sturmii": "蓝苇鳽",
+"Botaurus minutus": "小苇鳽",
+"Botaurus sinensis": "黄苇鳽",
+"Botaurus dubius": "黑背苇鳽",
+"Botaurus novaezelandiae": "新西兰苇鳽",
 "Nyctanassa violacea": "黄冠夜鹭",
 "Nyctanassa carcinocatactes": "百慕大夜鹭",
 "Nycticorax nycticorax": "夜鹭",
