@@ -13,6 +13,9 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=ebird.org
 // @grant        none
 // @run-at       document-idle
+// @updateURL    https://raw.githubusercontent.com/ljk5403/eBirdExtraNames/master/main.js
+// @downloadURL  https://raw.githubusercontent.com/ljk5403/eBirdExtraNames/master/main.js
+// @supportURL   https://github.com/ljk5403/eBirdExtraNames/issues
 // ==/UserScript==
 
 
