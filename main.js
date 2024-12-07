@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
 // @namespace    http://tampermonkey.net/
-// @version      1.7.20241104
+// @version      1.7.20241206.1
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -10,6 +10,7 @@
 // @namespace    https://github.com/ljk5403
 // @homepageURL  https://github.com/ljk5403/eBirdExtraNames
 // @match        https://ebird.org/*
+// @match        https://media.ebird.org/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=ebird.org
 // @grant        none
 // @run-at       document-idle
@@ -11300,7 +11301,11 @@
     // Run the function
     //onElementReady("ol.UnorderedList", insertChineseNamesToAll, 5) || setTimeout(insertChineseNamesToAll, 1000);
     onElementReady("ol.UnorderedList", insertChineseNamesToAll, 5)
-    setTimeout(insertChineseNamesToAll, 1000); //Run it again to avoid "ol.UnorderedList" does not exist
+    //setTimeout(insertChineseNamesToAll, 1000); //Run it again to avoid "ol.UnorderedList" does not exist
+    setInterval(insertChineseNamesToAll, 1500);
+
+
+
 })();
 
 /*
