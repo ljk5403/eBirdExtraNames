@@ -1,7 +1,7 @@
 # Add Extra Names for eBird Pages(especially Chinese Name)
 
 # eBird中文注名
-在eBird图鉴网站中的学名后加注中文名，使用 IOC 14.1
+在eBird图鉴网站中的学名后加注中文名，使用 IOC 15.1（会定时更新）
 
 [Source Code on Github](https://github.com/ljk5403/eBirdExtraNames)
 
