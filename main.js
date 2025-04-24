@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
 // @namespace    http://tampermonkey.net/
-// @version      1.7.20241206.1
+// @version      1.7.20250423
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -2719,6 +2719,7 @@
 "Ardeola bacchus": "池鹭",
 "Ardeola speciosa": "爪哇池鹭",
 "Bubulcus ibis": "西牛背鹭",
+"Ardea ibis": "西牛背鹭",
 "Bubulcus coromandus": "牛背鹭",
 "Ardea pacifica": "白颈鹭",
 "Ardea alba": "大白鹭",
@@ -2867,7 +2868,8 @@
 "Megatriorchis doriae": "多氏鹰",
 "Microspizias superciliosus": "侏鹰",
 "Microspizias collaris": "半领鹰",
-"Accipiter trivirgatus": "凤头鹰",
+//"Accipiter trivirgatus": "凤头鹰",
+"Lophospiza trivirgata": "凤头鹰",
 "Accipiter griseiceps": "苏拉凤头鹰",
 "Accipiter poliogaster": "灰腹鹰",
 "Accipiter toussenelii": "红胸鹰",
