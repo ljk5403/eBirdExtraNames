@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
 // @namespace    http://tampermonkey.net/
-// @version      1.7.20250423
+// @version      1.7.20250423.1
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -11292,7 +11292,7 @@
     // Insert Chinese names base on CSS path
     function insertChineseNamesbyCSSPath(csspath){
         let sciNames = document.querySelectorAll(csspath);
-        console.log(`For CSS Path ${csspath} found sci names `, sciNames)
+        //ForDebug//console.log(`For CSS Path ${csspath} found sci names `, sciNames)
         for (let sciNameElement of sciNames) {
             insertChineseNames(sciNameElement)
         }
@@ -11314,51 +11314,47 @@
             }
 
             const scientificName = sciNameElement.textContent.trim();
-            console.log('Scientific name:', scientificName);
+            //ForDebug//console.log('Scientific name:', scientificName);
 
             const chineseName = nameMap[extractFirstTwoWords(scientificName)];
             if (chineseName) {
                 const chineseNameSpan = document.createElement('span');
                 chineseNameSpan.textContent = ` ${chineseName}`;
                 sciNameElement.appendChild(chineseNameSpan);
-                console.log(`Added Chinese name: ${chineseName}`);
-
+                console.log(`Added Chinese name: ${chineseName} for ${scientificName}`);
                 // Mark the element as processed
                 sciNameElement.setAttribute('data-processed', 'true');
             } else {
                 console.warn(`No Chinese name found for: ${scientificName}`);
+                // Mark the element as processed
+                sciNameElement.setAttribute('data-processed', 'true');
             }
         } else {
             console.error('Scientific name element not found.');
         }
     }
 
-    function onElementReady(querySelector,callBack, testtime) {
-        if (document.querySelector(querySelector)) {
-          callBack();
-          return true
-        } else {
-          setTimeout(()=>onElementReady.call(this, querySelector, callBack, testtime), 100);
-        }
-        if (testtime > 0) {
-            testtime = testtime -1
-        } else {
-            return false
-        }
+    insertChineseNamesToAll()
+
+    // Create a function that will be called when DOM changes
+    function domChangeHandler(mutations) {
+        console.log("DOM changed, run insertChineseNamesToAll()", mutations);
+        insertChineseNamesToAll();
     }
 
-    // Run the function
-    //onElementReady("ol.UnorderedList", insertChineseNamesToAll, 5) || setTimeout(insertChineseNamesToAll, 1000);
-    onElementReady("ol.UnorderedList", insertChineseNamesToAll, 5)
-    //setTimeout(insertChineseNamesToAll, 1000); //Run it again to avoid "ol.UnorderedList" does not exist
-    setInterval(insertChineseNamesToAll, 1500);
+    // Create a MutationObserver instance with your callback function
+    const observer = new MutationObserver(domChangeHandler);
 
-
+    // Start observing the document with the configured parameters
+    observer.observe(document.body, {
+        childList: true,  // observe added/removed children
+        subtree: true,    // observe changes in descendants too
+    });
 
 })();
 
 /*
-Test examples:
+Test examples: Combination here: https://www.one-tab.com/page/W3-C6qBhTPaE-gyZQHI5Eg
 1. Checklist: https://ebird.org/checklist/S183780628
     Testing feature: load names before images
 2. Lifelist: https://ebird.org/lifelist?time=life&r=world
@@ -11366,7 +11362,4 @@ Test examples:
             https://ebird.org/targets?r1=CN-12
 4. Trip report: https://ebird.org/tripreport/233389
 5. Home page: https://ebird.org/home
-TODO:
-Click on image, then update name?
-
 */
