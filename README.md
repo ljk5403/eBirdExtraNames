@@ -15,6 +15,14 @@
 ![](example.png)
 
 
-## Bird List
+## Bird List Update Log
 
+
+### 2025/04/23
+Bird list from: <https://www.worldbirdnames.org/new/ioc-lists/master-list-2/> "Multilingual Version (v15.1, Excel file XLSX, 7.8Mb)"
+
+Local file: `Multiling IOC 15.1_c.xlsx`
+
+
+### Before 2025/04/23
 Bird list from: <https://www.worldbirdnames.org/new/ioc-lists/master-list-2/> "Multilingual Version (v14.1, Excel file XLSX, 7.8Mb)"
