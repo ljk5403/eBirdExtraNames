@@ -26,3 +26,10 @@ Local file: `Multiling IOC 15.1_c.xlsx`
 
 ### Before 2025/04/23
 Bird list from: <https://www.worldbirdnames.org/new/ioc-lists/master-list-2/> "Multilingual Version (v14.1, Excel file XLSX, 7.8Mb)"
+
+
+### How to update Bird List
+
+1. Go to <https://www.worldbirdnames.org/new/ioc-lists/master-list-2/>, download the latest `Multilingual Version`
+2. Edit the local `xlsx_to_js.py`, change the file name and row name accordingly. Then run `python3 xlsx_to_js.py`, the `js_nameMap.txt` should be updated.
+3. Replace everything in `const nameMap = {}` from `main.py` with everything in `js_nameMap.txt`.
