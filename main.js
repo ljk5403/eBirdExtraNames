@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
 // @namespace    http://tampermonkey.net/
-// @version      1.7.20250425
+// @version      1.7.20250428
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -12,6 +12,7 @@
 // @match        https://ebird.org/*
 // @match        https://media.ebird.org/*
 // @match        https://macaulaylibrary.org/*
+// @match        https://merlinbirds.org/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=ebird.org
 // @grant        none
 // @run-at       document-idle
@@ -11288,6 +11289,7 @@
         insertChineseNamesbyCSSPath('.sci');
         insertChineseNamesbyCSSPath('.Species-sci.Species-sub');
         insertChineseNamesbyCSSPath('.MediaCredit-sciName');
+        insertChineseNamesbyCSSPath('.sciName'); //Support for merlinbirds.org
     }
 
     // Insert Chinese names base on CSS path
