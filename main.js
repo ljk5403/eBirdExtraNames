@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
 // @namespace    http://tampermonkey.net/
-// @version      1.7.20250428
+// @version      1.7.20250506
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -11337,7 +11337,8 @@
         }
     }
 
-    insertChineseNamesToAll()
+    //Run function 1s after page loaded(compensatoing the weird "twice load" behavior on merlinbirds.org)
+    setTimeout(function() {insertChineseNamesToAll()}, 1000);
 
     // Create a function that will be called when DOM changes
     function domChangeHandler(mutations) {
@@ -11365,4 +11366,5 @@ Test examples: Combination here: https://www.one-tab.com/page/W3-C6qBhTPaE-gyZQH
             https://ebird.org/targets?r1=CN-12
 4. Trip report: https://ebird.org/tripreport/233389
 5. Home page: https://ebird.org/home
+6. Merlin webpage from the app: https://merlinbirds.org/species/rengre
 */
