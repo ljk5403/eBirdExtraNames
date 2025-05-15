@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
 // @namespace    http://tampermonkey.net/
-// @version      1.7.20250506
+// @version      1.8.20250514
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -11281,6 +11281,14 @@
 "Tangara chilensis": "仙靓唐纳雀",
 "Tangara callophrys": "白冠靓唐纳雀",
 "Tangara velia": "白腰靓唐纳雀",
+//Here is the correction for the name map based on what eBird is using
+//Usually the first line is the one from the name map, and the second one is the one from ebird
+"Leuconotopicus villosus": "长嘴啄木鸟",
+"Dryobates villosus": "长嘴啄木鸟",
+
+"Thinornis dubius": "金眶鸻",
+
+"Periparus venustulus": "黄腹山雀",
     };
 
     // Find all scientific names

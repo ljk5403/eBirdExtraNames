@@ -1,0 +1,8 @@
+//Here is the correction for the name map based on what eBird is using
+//Usually the first line is the one from the name map, and the second one is the one from ebird
+"Leuconotopicus villosus": "长嘴啄木鸟",
+"Dryobates villosus": "长嘴啄木鸟",
+
+"Thinornis dubius": "金眶鸻",
+
+"Periparus venustulus": "黄腹山雀",
