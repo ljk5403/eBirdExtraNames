@@ -11,9 +11,9 @@ referanceDf = pd.read_excel(referance)
 with open(js_nameMap, "w") as file:
     # Iterate over each row in the DataFrame
     for index, row in referanceDf.iterrows():
-        # Fetch the elements in "IOC_xx.x" and "Chinese" columns
+        # Fetch the elements in "IOC_xx.x" and "Chinese"(or any other language) columns
         ioc_value = row["IOC_15.1"]
-        chinese_value = row["Chinese"]
+        chinese_value = row["Portuguese (Lusophone)"]
         # Format the string as "A": "B",
         formatted_string = f'"{ioc_value}": "{chinese_value}",\n'
         # Write to the file
