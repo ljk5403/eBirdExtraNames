@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         eBird Add Chinese Name Near Scientific Name
+// @name         eBird Add Portuguese (Lusophone) Name Near Scientific Name
 // @version      1.9.20250622
 // @description  Add Portuguese (Lusophone) names next to scientific names on eBird species pages
 // @author       Jiankun Li
