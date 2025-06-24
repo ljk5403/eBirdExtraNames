@@ -18,8 +18,8 @@
 ## Support for Multi Language
 
 To apply this script to different language, follow this direction:(highly recommended: check out a new branch and push it back when you finished!)
-1. In `xlsx_to_js.py`, change the `targetColumn` to the target language, like `"English"`. To know how many language can be supported(by the current IOC file), simply run `py xlsx_to_js.py` and it will print out all possible columns that the IOC file included.
-2. Run `py xlsx_to_js.py`, then check `js_nameMap.txt` and see if it is correct.
+1. In `xlsx_to_js.py`, change the `targetColumn` to the target language, like `"English"`. To know how many language can be supported(by the current IOC file), simply run `python3 xlsx_to_js.py` and it will print out all possible columns that the IOC file included.
+2. Run `python3 xlsx_to_js.py`, then check `js_nameMap.txt` and see if it is correct.
 3. Check `correction.txt`, if there are something that is not needed there(like from other language), delete them.
 4. Change the Language discription in `main_template.js` if you prefer.
 5. Run `./generator.sh` to generate the `main.js`.
