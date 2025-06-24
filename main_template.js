@@ -1,7 +1,6 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
-// @namespace    http://tampermonkey.net/
-// @version      1.8.20250514
+// @version      1.9.20250623
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -20,11 +19,6 @@
 // @downloadURL  https://raw.githubusercontent.com/ljk5403/eBirdExtraNames/master/main.js
 // @supportURL   https://github.com/ljk5403/eBirdExtraNames/issues
 // ==/UserScript==
-
-
-// ChatGPT: I want to write a Tampermonkey script to add Chinese Name Near Scientific Name on the website https://ebird.org/species/ for bird species. Please think carefully and show me your code for doing that.
-
-// "//Fix for eBird" means a species have a different scientific name in ebird
 
 (function() {
     'use strict';
