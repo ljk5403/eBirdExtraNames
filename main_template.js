@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         eBird Add Chinese Name Near Scientific Name
+// @name         eBird Add English Name Near Scientific Name
 // @version      1.9.20250623
-// @description  Add Chinese names next to scientific names on eBird species pages
+// @description  Add English names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
 // @author       Jiankun Li
@@ -15,8 +15,8 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=ebird.org
 // @grant        none
 // @run-at       document-idle
-// @updateURL    https://raw.githubusercontent.com/ljk5403/eBirdExtraNames/master/main.js
-// @downloadURL  https://raw.githubusercontent.com/ljk5403/eBirdExtraNames/master/main.js
+// @updateURL    https://raw.githubusercontent.com/ljk5403/eBirdExtraNames/English/main.js
+// @downloadURL  https://raw.githubusercontent.com/ljk5403/eBirdExtraNames/English/main.js
 // @supportURL   https://github.com/ljk5403/eBirdExtraNames/issues
 // ==/UserScript==
 
