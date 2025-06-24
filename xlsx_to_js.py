@@ -6,10 +6,11 @@ js_nameMap = 'js_nameMap.txt'
 
 referanceDf = pd.read_excel(referance)
 
-print("Found Columns")
+print("Found Columns: ")
 print(referanceDf.columns)
 
 targetColumn="English"
+print("Target Column: ", targetColumn)
 
 
 # Open a file in write mode
@@ -23,4 +24,4 @@ with open(js_nameMap, "w") as file:
         formatted_string = f'"{ioc_value}": "{chinese_value}",\n'
         # Write to the file
         file.write(formatted_string)
-    print("JS namemap file  generated:", js_nameMap)
+    print("JS namemap file for ",targetColumn," is generated:", js_nameMap)
