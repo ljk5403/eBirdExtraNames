@@ -1,0 +1,21 @@
+diff --git a/main_template.js b/main_template.js
+index ba6786b..38af95b 100644
+--- a/main_template.js
++++ b/main_template.js
+@@ -1,6 +1,6 @@
+ // ==UserScript==
+ // @name         eBird Add Chinese Name Near Scientific Name
+-// @version      1.9.20250623
++// @version      1.9.20250708
+ // @description  Add Chinese names next to scientific names on eBird species pages
+ // @name:zh-CN   eBird中文注名
+ // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
+@@ -68,7 +68,7 @@
+             const chineseName = nameMap[extractFirstTwoWords(scientificName)];
+             if (chineseName) {
+                 const chineseNameSpan = document.createElement('span');
+-                chineseNameSpan.textContent = ` ${chineseName}`;
++                chineseNameSpan.textContent = ` | ${chineseName}`;
+                 sciNameElement.appendChild(chineseNameSpan);
+                 console.log(`Added Chinese name: ${chineseName} for ${scientificName}`);
+                 // Mark the element as processed
