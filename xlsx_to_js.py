@@ -9,7 +9,7 @@ referanceDf = pd.read_excel(referance)
 print("Found Columns: ")
 print(referanceDf.columns)
 
-targetColumn="English"
+targetColumn="Chinese"
 print("Target Column: ", targetColumn)
 
 
