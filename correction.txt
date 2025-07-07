@@ -6,3 +6,5 @@
 "Thinornis dubius": "金眶鸻",
 
 "Periparus venustulus": "黄腹山雀",
+
+"Butorides striata": "绿鹭",
