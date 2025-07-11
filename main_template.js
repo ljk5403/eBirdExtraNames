@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
-// @version      1.9.20250708.1
+// @version      1.9.20250711
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -48,10 +48,14 @@
     }
     // Function to extract the first two words from a given scientific name
     function extractFirstTwoWords(sciName) {
-        // Split the name by spaces
-        const words = sciName.trim().split(/\s+/);
-        // Join the first two words back together
-        return words.slice(0, 2).join(' ');
+      // Deal with hybird birds:
+      if (sciName.includes(" x ")) {
+        sciName = "HYBRID_BIRD";
+      }
+      // Split the name by spaces
+      const words = sciName.trim().split(/\s+/);
+      // Join the first two words back together
+      return words.slice(0, 2).join(' ');
     }
     // Function to insert Chinese names next to the scientific name
     function insertChineseNames(sciNameElement) {
@@ -67,12 +71,16 @@
 
             const chineseName = nameMap[extractFirstTwoWords(scientificName)];
             if (chineseName) {
-                const chineseNameSpan = document.createElement('span');
-                chineseNameSpan.textContent = ` | ${chineseName}`;
-                sciNameElement.appendChild(chineseNameSpan);
-                console.log(`Added Chinese name: ${chineseName} for ${scientificName}`);
-                // Mark the element as processed
-                sciNameElement.setAttribute('data-processed', 'true');
+              if (chineseName === "HYBRID_BIRD") {
+                //Leave it as is for Hybird birds at this time
+              } else {
+                  const chineseNameSpan = document.createElement('span');
+                  chineseNameSpan.textContent = ` | ${chineseName}`;
+                  sciNameElement.appendChild(chineseNameSpan);
+                  console.log(`Added Chinese name: ${chineseName} for ${scientificName}`);
+                  // Mark the element as processed
+                  sciNameElement.setAttribute('data-processed', 'true');
+              }
             } else {
                 console.warn(`No Chinese name found for: ${scientificName}`);
                 // Mark the element as processed
