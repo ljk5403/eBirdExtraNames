@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
-// @version      2.1.20251107
+// @version      2.2.20251107
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -11520,18 +11520,18 @@
                 merlinButton.textContent = "Merlin";
                 merlinButton.target = "_blank";
                 merlinButton.style.cssText = `
-                margin-left: auto;
-                margin-right: 0em;
-    padding: 0px 8px;
-    font-size: 0.9em;
-    background-color: white;
-    color: #4CAF50;
-    text-decoration: none;
-    border-radius: 3px;
-    border: 1px solid #4CAF50;
-    display: inline-block;
-    font-weight: normal;
-    line-height: 1.2;
+                    margin-left: auto;
+                    margin-right: 0em;
+                    padding: 0px 8px;
+                    font-size: 0.9em;
+                    background-color: white;
+                    color: #4CAF50;
+                    text-decoration: none;
+                    border-radius: 3px;
+                    border: 1px solid #4CAF50;
+                    display: inline-block;
+                    font-weight: normal;
+                    line-height: 1.2;
                 `;
 
                 // 阻止事件冒泡
@@ -11552,7 +11552,10 @@
                 // 在学名后添加按钮
                 // sciNameElement.appendChild(merlinButton);
                 // 在学名前： sciNameElement.prepend(merlinButton);
-
+                mainHeading.parentNode.parentNode.style.cssText +=
+                    "display: flex; align-items: center; justify-content: space-between;";
+                mainHeading.parentNode.style.cssText +=
+                    "display: inline-flex; flex-direction: column;"
                 mainHeading.parentNode.parentNode.insertBefore(
                     merlinButton,
                     mainHeading.parentNode.nextSibling
