@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
-// @version      1.9.20250711
+// @version      2.1.20251107
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -12,16 +12,18 @@
 // @match        https://media.ebird.org/*
 // @match        https://macaulaylibrary.org/*
 // @match        https://merlinbirds.org/*
+// @grant        GM_registerMenuCommand
+// @grant        GM_getValue
+// @grant        GM_setValue
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=ebird.org
-// @grant        none
 // @run-at       document-idle
-// @updateURL    https://raw.githubusercontent.com/ljk5403/eBirdExtraNames/master/main.js
-// @downloadURL  https://raw.githubusercontent.com/ljk5403/eBirdExtraNames/master/main.js
 // @supportURL   https://github.com/ljk5403/eBirdExtraNames/issues
+// @downloadURL https://update.greasyfork.org/scripts/495909/eBird%20Add%20Chinese%20Name%20Near%20Scientific%20Name.user.js
+// @updateURL https://update.greasyfork.org/scripts/495909/eBird%20Add%20Chinese%20Name%20Near%20Scientific%20Name.meta.js
 // ==/UserScript==
 
-(function() {
-    'use strict';
+(function () {
+    "use strict";
 
     // Mapping of scientific names to Chinese names
     const nameMap = {
@@ -11287,39 +11289,183 @@
 "Butorides striata": "绿鹭",
     };
 
+
+
+    // 检测是否为移动设备
+    function isMerlinCompatibleDevice() {
+        return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
+
+    // 默认配置
+    const defaultSettings = {
+        showMerlinButton: isMerlinCompatibleDevice(), // 移动端默认开启，桌面端默认关闭
+        openInNewTab: true,
+    };
+
+    // 获取设置
+    function getSettings() {
+        return {
+            showMerlinButton: GM_getValue(
+                "showMerlinButton",
+                defaultSettings.showMerlinButton
+            ),
+            openInNewTab: GM_getValue(
+                "openInNewTab",
+                defaultSettings.openInNewTab
+            ),
+        };
+    }
+
+    // 保存设置
+    function saveSettings(settings) {
+        GM_setValue("showMerlinButton", settings.showMerlinButton);
+        GM_setValue("openInNewTab", settings.openInNewTab);
+    }
+
+    // 创建配置面板
+    function showSettingsPanel() {
+        const settings = getSettings();
+
+        // 创建遮罩层
+        const overlay = document.createElement("div");
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        `;
+
+        // 创建配置面板
+        const panel = document.createElement("div");
+        panel.style.cssText = `
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 400px;
+            font-family: Arial, sans-serif;
+        `;
+
+        panel.innerHTML = `
+            <h2 style="margin-top: 0; color: #333;">eBird 添加中文名设置</h2>
+
+            <div style="margin: 20px 0;">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="checkbox" id="showMerlinButton" ${
+                        settings.showMerlinButton ? "checked" : ""
+                    }
+                        style="width: 18px; height: 18px; margin-right: 10px; cursor: pointer;">
+                    <span style="font-size: 16px;">显示 Merlin 按钮</span>
+                </label>
+                <p style="margin: 5px 0 0 28px; font-size: 13px; color: #666;">
+                    在鸟类名称旁边添加 Merlin 链接按钮
+                </p>
+            </div>
+
+            <div style="margin: 20px 0;">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="checkbox" id="openInNewTab" ${
+                        settings.openInNewTab ? "checked" : ""
+                    }
+                        style="width: 18px; height: 18px; margin-right: 10px; cursor: pointer;">
+                    <span style="font-size: 16px;">在新标签页打开物种链接</span>
+                </label>
+                <p style="margin: 5px 0 0 28px; font-size: 13px; color: #666;">
+                    点击鸟类名称时在新标签页中打开
+                </p>
+            </div>
+
+            <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
+                <button id="cancelBtn" style="
+                    padding: 8px 20px;
+                    background-color: #f0f0f0;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 14px;
+                ">取消</button>
+                <button id="saveBtn" style="
+                    padding: 8px 20px;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 14px;
+                ">保存</button>
+            </div>
+        `;
+
+        overlay.appendChild(panel);
+        document.body.appendChild(overlay);
+
+        // 保存按钮事件
+        panel.querySelector("#saveBtn").addEventListener("click", () => {
+            const newSettings = {
+                showMerlinButton:
+                    panel.querySelector("#showMerlinButton").checked,
+                openInNewTab: panel.querySelector("#openInNewTab").checked,
+            };
+            saveSettings(newSettings);
+            document.body.removeChild(overlay);
+            alert("设置已保存！刷新页面以应用更改。");
+        });
+
+        // 取消按钮事件
+        panel.querySelector("#cancelBtn").addEventListener("click", () => {
+            document.body.removeChild(overlay);
+        });
+
+        // 点击遮罩层关闭
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) {
+                document.body.removeChild(overlay);
+            }
+        });
+    }
+
+    // 注册菜单命令
+    GM_registerMenuCommand("⚙️ 设置", showSettingsPanel);
+
     // Find all scientific names
-    function insertChineseNamesToAll(){
-        insertChineseNamesbyCSSPath('.Heading-sub--sci');
-        insertChineseNamesbyCSSPath('.sci');
-        insertChineseNamesbyCSSPath('.Species-sci.Species-sub');
-        insertChineseNamesbyCSSPath('.MediaCredit-sciName');
-        insertChineseNamesbyCSSPath('.sciName'); //Support for merlinbirds.org
+    function insertChineseNamesToAll() {
+        insertChineseNamesbyCSSPath(".Heading-sub--sci");
+        insertChineseNamesbyCSSPath(".sci");
+        insertChineseNamesbyCSSPath(".Species-sci.Species-sub");
+        insertChineseNamesbyCSSPath(".MediaCredit-sciName");
+        insertChineseNamesbyCSSPath(".sciName"); //Support for merlinbirds.org
     }
 
     // Insert Chinese names base on CSS path
-    function insertChineseNamesbyCSSPath(csspath){
+    function insertChineseNamesbyCSSPath(csspath) {
         let sciNames = document.querySelectorAll(csspath);
         //ForDebug//console.log(`For CSS Path ${csspath} found sci names `, sciNames)
         for (let sciNameElement of sciNames) {
-            insertChineseNames(sciNameElement)
+            insertChineseNames(sciNameElement);
         }
     }
     // Function to extract the first two words from a given scientific name
     function extractFirstTwoWords(sciName) {
-      // Deal with hybird birds:
-      if (sciName.includes(" x ")) {
-        sciName = "HYBRID_BIRD";
-      }
-      // Split the name by spaces
-      const words = sciName.trim().split(/\s+/);
-      // Join the first two words back together
-      return words.slice(0, 2).join(' ');
+        // Deal with hybird birds:
+        if (sciName.includes(" x ")) {
+            sciName = "HYBRID_BIRD";
+        }
+        // Split the name by spaces
+        const words = sciName.trim().split(/\s+/);
+        // Join the first two words back together
+        return words.slice(0, 2).join(" ");
     }
     // Function to insert Chinese names next to the scientific name
     function insertChineseNames(sciNameElement) {
         if (sciNameElement) {
             // Check if the element has already been processed
-            if (sciNameElement.hasAttribute('data-processed')) {
+            if (sciNameElement.hasAttribute("data-processed")) {
                 //console.log(`Element already processed: ${sciNameElement.textContent.trim()}`);
                 return; // Exit the function if already processed
             }
@@ -11329,33 +11475,135 @@
 
             const chineseName = nameMap[extractFirstTwoWords(scientificName)];
             if (chineseName) {
-              if (chineseName === "HYBRID_BIRD") {
-                //Leave it as is for Hybird birds at this time
-              } else {
-                  const chineseNameSpan = document.createElement('span');
-                  chineseNameSpan.textContent = ` | ${chineseName}`;
-                  sciNameElement.appendChild(chineseNameSpan);
-                  console.log(`Added Chinese name: ${chineseName} for ${scientificName}`);
-                  // Mark the element as processed
-                  sciNameElement.setAttribute('data-processed', 'true');
-              }
+                if (chineseName === "HYBRID_BIRD") {
+                    //Leave it as is for Hybird birds at this time
+                } else {
+                    const chineseNameSpan = document.createElement("span");
+                    chineseNameSpan.textContent = ` | ${chineseName}`;
+                    sciNameElement.appendChild(chineseNameSpan);
+                    console.log(
+                        `Added Chinese name: ${chineseName} for ${scientificName}`
+                    );
+                    // Mark the element as processed
+                    sciNameElement.setAttribute("data-processed", "true");
+                }
             } else {
                 console.warn(`No Chinese name found for: ${scientificName}`);
                 // Mark the element as processed
-                sciNameElement.setAttribute('data-processed', 'true');
+                sciNameElement.setAttribute("data-processed", "true");
             }
         } else {
-            console.error('Scientific name element not found.');
+            console.error("Scientific name element not found.");
+        }
+    }
+
+    function addMerlinButtons() {
+        const speciesLinks = document.querySelectorAll("a[data-species-code]");
+
+        speciesLinks.forEach((link) => {
+            const speciesCode = link.getAttribute("data-species-code");
+
+            // 找到主标题元素（Canada Goose）
+            const mainHeading = link.querySelector(".Heading-main");
+
+            if (mainHeading && speciesCode) {
+                // 检查是否已经处理过
+                if (mainHeading.getAttribute("data-merlin-processed")) {
+                    return;
+                }
+
+                // 创建 Merlin 按钮
+                const merlinUrl = `https://merlinbirds.org/species/${speciesCode}`;
+                const merlinButton = document.createElement("a");
+
+                merlinButton.href = merlinUrl;
+                merlinButton.textContent = "Merlin";
+                merlinButton.target = "_blank";
+                merlinButton.style.cssText = `
+                margin-left: auto;
+                margin-right: 0em;
+    padding: 0px 8px;
+    font-size: 0.9em;
+    background-color: white;
+    color: #4CAF50;
+    text-decoration: none;
+    border-radius: 3px;
+    border: 1px solid #4CAF50;
+    display: inline-block;
+    font-weight: normal;
+    line-height: 1.2;
+                `;
+
+                // 阻止事件冒泡
+                merlinButton.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                });
+
+                // 鼠标悬停效果
+                merlinButton.addEventListener("mouseenter", () => {
+                    merlinButton.style.backgroundColor = "#f0f8f0"; // 浅绿色背景
+                    merlinButton.style.color = "#45a049"; // 深绿色字体
+                });
+                merlinButton.addEventListener("mouseleave", () => {
+                    merlinButton.style.backgroundColor = "white"; // 白色背景
+                    merlinButton.style.color = "#4CAF50"; // 绿色字体
+                });
+                //Draft:
+                // 在学名后添加按钮
+                // sciNameElement.appendChild(merlinButton);
+                // 在学名前： sciNameElement.prepend(merlinButton);
+
+                mainHeading.parentNode.parentNode.insertBefore(
+                    merlinButton,
+                    mainHeading.parentNode.nextSibling
+                );
+                mainHeading.setAttribute("data-merlin-processed", "true");
+            }
+        });
+        console.log(`Added Merlin Buttons`);
+    }
+
+    function openSpeciesLinksInNewTab() {
+        const speciesLinks = document.querySelectorAll("a[data-species-code]");
+
+        speciesLinks.forEach((link) => {
+            // 检查是否已经处理过
+            if (link.getAttribute("open-in-new-tab-processed")) {
+                return;
+            }
+
+            // 设置在新标签页打开
+            link.setAttribute("target", "_blank");
+
+            // 添加安全属性
+            link.setAttribute("rel", "noopener noreferrer");
+
+            // 标记为已处理
+            link.setAttribute("open-in-new-tab-processed", "true");
+        });
+        console.log(`Change the links to be opened in new tab!`);
+    }
+
+    function myMainFunction() {
+        insertChineseNamesToAll();
+        const settings = getSettings();
+        if (settings.showMerlinButton) {
+            addMerlinButtons();
+        }
+        if (settings.openInNewTab) {
+            openSpeciesLinksInNewTab();
         }
     }
 
     //Run function 1s after page loaded(compensatoing the weird "twice load" behavior on merlinbirds.org)
-    setTimeout(function() {insertChineseNamesToAll()}, 1000);
+    setTimeout(function () {
+        myMainFunction();
+    }, 1000);
 
     // Create a function that will be called when DOM changes
     function domChangeHandler(mutations) {
-        console.log("DOM changed, run insertChineseNamesToAll()", mutations);
-        insertChineseNamesToAll();
+        console.log("DOM changed, run myMainFunction()", mutations);
+        myMainFunction();
     }
 
     // Create a MutationObserver instance with your callback function
@@ -11363,10 +11611,9 @@
 
     // Start observing the document with the configured parameters
     observer.observe(document.body, {
-        childList: true,  // observe added/removed children
-        subtree: true,    // observe changes in descendants too
+        childList: true, // observe added/removed children
+        subtree: true, // observe changes in descendants too
     });
-
 })();
 
 /*
