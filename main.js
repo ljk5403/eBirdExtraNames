@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         eBird Add Chinese Name Near Scientific Name
-// @version      2.2.20251107
+// @version      2.3.20260203
 // @description  Add Chinese names next to scientific names on eBird species pages
 // @name:zh-CN   eBird中文注名
 // @description:zh-CN  在eBird网站中的学名后加注中文名，使用 IOC 14.1
@@ -11568,8 +11568,11 @@
 
     function openSpeciesLinksInNewTab() {
         const speciesLinks = document.querySelectorAll("a[data-species-code]");
+        const ebirdLinks = document.querySelectorAll("a[href^='https://ebird.org/species/']");
+        
+        const allLinks = [...speciesLinks, ...ebirdLinks];
 
-        speciesLinks.forEach((link) => {
+        allLinks.forEach((link) => {
             // 检查是否已经处理过
             if (link.getAttribute("open-in-new-tab-processed")) {
                 return;
